@@ -172,7 +172,7 @@ def setSetting():
         text = font.render("Choose your difficulty", True, (0,0,0))
         window.blit(text, (500-text.get_width()//2, 250))
 
-        settings = Button(window, 50, 50, 100, 100, text='Go Back', fontSize=30, margin=20, onClick=lambda: setSettingFalse())
+        settings = Button(window, 30, 30, 150, 150, image = settingImg, colour=(0, 0, 0, 0),hoverColour=(20, 0, 0, 0), pressedColour=(0, 0, 0, 0), onClick=lambda: setSettingFalse())
 
         easy = Button(window, 100, 600, 200, 75, text='Easy', fontSize=30, margin=20, onClick=lambda: setEasy())
         medium = Button(window, 400, 600, 200, 75, text='Medium', fontSize=30, margin=20, onClick=lambda: setMedium())
@@ -283,7 +283,10 @@ while run:
         start = font.render('Press Y to Start', True, (0, 0, 255))
         window.blit(start, (500 - start.get_width()//2, 500))
 
-        settings = Button(window, 50, 50, 100, 100, text='Settings', fontSize=30, margin=20, onClick=lambda: setSetting())
+        settingImg = pygame.image.load('settings.jpg').convert_alpha()
+        settingImg = pygame.transform.scale(settingImg, (150, 150))
+
+        settings = Button(window, 30, 30, 150, 150, image = settingImg, colour=(0, 0, 0, 0),hoverColour=(0, 0, 0, 0), pressedColour=(0, 0, 0, 0), onClick=lambda: setSetting())
 
         pygame_widgets.update(pygame.event.get())
         pygame.display.update()
