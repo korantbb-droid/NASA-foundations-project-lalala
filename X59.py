@@ -10,32 +10,111 @@ pygame.init()
 window = pygame.display.set_mode((1000, 1000))
 
 #Question List
-questionList = ['What is 2 + 2?', 'What is the capital of France?', 'What color is the sky?', 'What is the largest mammal?', 'What is the boiling point of water?', 'What is the smallest prime number?', 
-                'What is the currency of Japan?', 'What is the chemical symbol for gold?', 'What is the tallest mountain in the world?', 'What is the largest ocean on Earth?', 'What is the square root of 16?', 
-                'What is the capital of Australia?', 'What is the largest planet in our solar system?', 'What is the chemical symbol for oxygen?', 'What is the longest river in the world?', 
-                'What is the currency of the United States?', 'What is the smallest country in the world?', 'What is the chemical symbol for carbon?', 'What is the highest waterfall in the world?', 
-                'What is the largest desert on Earth?', 'What is the capital of Canada?', 'What is the chemical symbol for hydrogen?', 'What is the longest mountain range in the world?', 
-                'What is the currency of the United Kingdom?', 'What is the smallest continent in the world?', 'What is the chemical symbol for nitrogen?', 'What is the highest mountain in Africa?', 
-                'What is the largest lake in the world?', 'What is the capital of Germany?', 'What is the chemical symbol for helium?']
 
-#Plane Var
-plane_x = 250
-plane_y = 700
+questionDictionary = {
+    'Sound travels in what form?': 'Waves',
+    'Sound travels faster than light.': 'False',
+    'What is the name of something that travels at the speed of sound?': 'Sonic',
+    'What happens when a plane travels faster than sound?': 'it creates a sonic boom',
+    'What is a sonic boom?': 'loud noise caused by shock waves',
+    'What is the shape of a shock wave?': "Cone",
+    'Which is faster?': 'Supersonic plane',
+    'What is NASAs X-59 QUESST?': 'A supersonic plane being tested',
+    'Why are sonic booms a problem?:': 'They scare people and animals',
+    'What do shock waves cause?': 'Sonic Booms',
+    'What was the point of creating the X-59?': 'To make supersonic flight quieter',
+    'The FAA Regulation (FAR) prohibits supersonic flight over the US.': 'True',
+    'What sound would be loudest?': 'A jet taking off',
+    'Why don\'t all planes create sonic booms?': 'They fly slower than the speed of sound',
+    'What is pitch?': 'How high or low a sound is',
+    'What will have a higher pitch?': 'A whistle',
+    'What is the volume (amplitude) of sound?': 'How loud or quiet a sound is',
+    'Increasing the energy of a wave will increase its: ': 'Amplitude',
+    'What type of wave is a sound wave?': 'A longitudinal wave',
+    'What do I need to reduce to make a sound wave quieter?': 'Amplitude',
+    'How is sound made?': 'Vibrations that produce sound waves',
+    'What do sound waves carry?': 'Energy',
+    'What is the X-59 shaped the way it is?': 'To reduce the loudness of sonic booms',
+    'If a sonic boom is too loud:': 'Windows can shake or shatter',
+    'The sound from the X-59 is most similar to:': 'A car door slammed from 20 ft away',
+    'Why does a sonic boom happen after a plane passes you?': 'Sound travels slower than the plane',
+    }
+wrongAnswers1 = [
+    'Circles',
+    'True',
+    'Hypersonic',
+    'It vanishes',
+    'A type of engine',
+    'Square',
+    'Subsonic plane',
+    'a new rocket',
+    'They make planes stop moving',
+    'Rain',
+    'So we can live on Mars',
+    'False',
+    'A whisper',
+    'Most are planes are too small',
+    'How fast something moves',
+    'Thunder',
+    'length * width * height',
+    'Pitch',
+    'a regular wave',
+    'Pitch',
+    'By light waves',
+    'color',
+    'it looks cooler',
+    'people can be annoyed',
+    'a big boom',
+    'air moves too slow'
+]
+
+wrongAnswers2 = [
+    'Circles',
+    ' ',
+    'Supersonic',
+    'It automatically stops',
+    'A noise made by any object',
+    'Triangle',
+    'They are the same',
+    'A flying car',
+    'They make everything quiet',
+    'Heat',
+    'To make invisible planes',
+    ' ',
+    'a ticking clock',
+    'Most planes turn their volume down',
+    'How bright something is',
+    'a drum',
+    'Pitch',
+    'Frequency',
+    'A happy wave',
+    'Volume',
+    'Heat energy',
+    'Water',
+    'To only fit one person',
+    'The plane will stop moving',
+    'a gunshot',
+    'The plane will make the sound later'
+
+]
+
 plane_width = 40
 plane_height = 60
 plane_vel = 8
+plane_x = 500
+plane_y = 800
 
 #Bullet Var
 bullet_width = 10
 bullet_height = 20
 bullet_x = plane_x + (plane_width - bullet_width)/2
-bullet_y = plane_y-50
+bullet_y = plane_y - 50
 
 isFiring = False
 
 #Question Var
-question_width = 200
-question_height = 100
+question_width = 250
+question_height = 150
 
 question_Y = 200
 
@@ -48,14 +127,19 @@ q3Answer = False
 
 score = 0
 showQuestion = True
+newQuestion = True
 
-difficulty = 40
+difficulty = 25
 
 #Lives Var
 heartImg = pygame.image.load('heart.png')
 heartImg = pygame.transform.scale(heartImg, (50, 50))
 
 totalLives = 3
+
+#Cloud Image
+cloudImg = pygame.image.load('cloud2.png')
+cloudImg = pygame.transform.scale(cloudImg, (question_width, question_height)).convert_alpha()
 
 #Custom Screen Var
 ifStart = True
@@ -153,7 +237,7 @@ def displayWin():
 def displayCorrect():
     global showQuestion
     text = font.render('Correct!', True, (0, 255, 0))
-    window.blit(text, (400, 500))
+    window.blit(text, (500-text.get_width()//2, 300))
     pygame.display.update()
     pygame.time.delay(1000)
     showQuestion = True
@@ -188,7 +272,7 @@ def setSetting():
 def displayWrong():
     global showQuestion
     text = font.render('Wrong!', True, (255, 0, 0))
-    window.blit(text, (400, 500))
+    window.blit(text, (500-text.get_width()//2, 300))
     pygame.display.update()
     pygame.time.delay(1000)
     showQuestion = True
@@ -352,7 +436,7 @@ while run:
     if keys[pygame.K_t]:
         showQuestion = True
     if keys[pygame.K_p]:
-        score = 10000
+        score = 9000
 
           
 #White Background
@@ -363,10 +447,26 @@ while run:
         showQuestion = False
 
 #Displaying Question
-    if showQuestion:
+    if showQuestion and score < 10000:
         font = pygame.font.SysFont('Arial', 30)
-        randomQuestion = random.randint(0, len(questionList)-1)
-        questionText = font.render(questionList[randomQuestion], True, (0, 0, 0))
+        if newQuestion:
+            randomQuestion = random.randint(0, len(questionDictionary)-1)
+            questionText = font.render(list(questionDictionary.keys())[randomQuestion], True, (0, 0, 0))
+            
+            font = pygame.font.SysFont('Arial', 20)
+            answer1 = font.render(str(questionDictionary[list(questionDictionary.keys())[randomQuestion]]), True, (0, 0, 0))
+            answer2 = font.render(wrongAnswers1[randomQuestion], True, (0, 0, 0))
+            answer3 = font.render(wrongAnswers2[randomQuestion], True, (0, 0, 0))
+
+            del questionDictionary[list(questionDictionary.keys())[randomQuestion]]
+            del wrongAnswers1[randomQuestion]
+            del wrongAnswers2[randomQuestion]
+
+            answerChoices = [answer1, answer2, answer3]
+            random.shuffle(answerChoices)
+
+            newQuestion = False
+
         window.blit(questionText, (500-questionText.get_width()//2, 400))
         pygame.display.update()
         pygame.time.delay(3000)
@@ -376,9 +476,27 @@ while run:
     pygame.draw.rect(window, (255, 0, 0), (plane_x, plane_y, plane_width, plane_height))
 
 #Drawing the 3 Possible Questions
-    pygame.draw.rect(window, (0,255,0), (100,question_Y,question_width,question_height))
-    pygame.draw.rect(window, (0,255,0), (400,question_Y,question_width,question_height))
-    pygame.draw.rect(window, (0,255,0), (700,question_Y,question_width,question_height))
+    # pygame.draw.rect(window, (0,255,0), (100,question_Y,question_width,question_height))
+    # pygame.draw.rect(window, (0,255,0), (400,question_Y,question_width,question_height))
+    # pygame.draw.rect(window, (0,255,0), (700,question_Y,question_width,question_height))
+    # answer1 = font.render(str(questionDictionary[list(questionDictionary.keys())[randomQuestion]]), True, (0, 0, 0))
+    # answer2 = font.render('Wrong Answer', True, (0, 0, 0))
+    # answer3 = font.render('Wrong Answer', True, (0, 0, 0))
+    
+    window.blit(cloudImg, (100, question_Y))
+    window.blit(cloudImg, (400, question_Y))
+    window.blit(cloudImg, (700, question_Y))
+
+    window.blit(answerChoices[0], (100 + (question_width - answerChoices[0].get_width())//2, question_Y + (question_height - answerChoices[0].get_height())//2))
+    window.blit(answerChoices[1], (400 + (question_width - answerChoices[1].get_width())//2, question_Y + (question_height - answerChoices[1].get_height())//2))
+    window.blit(answerChoices[2], (700 + (question_width - answerChoices[2].get_width())//2, question_Y + (question_height - answerChoices[2].get_height())//2))
+
+    if answerChoices[0] == answer1:
+        rightAnswer = 1
+    elif answerChoices[1] == answer1:
+        rightAnswer = 2  
+    else:
+        rightAnswer = 3
 
 #Update Score
     font = pygame.font.SysFont('Arial', 50)
@@ -414,25 +532,28 @@ while run:
     q1BouondaryRight = (300 - bullet_width)
 
     q2BoundaryLeft = (400 - bullet_width)
-    q2BouondaryRight = (600 - bullet_width)
+    q2BouondaryRight = (650 - bullet_width)
                         
     q3BoundaryLeft = (700 - bullet_width)
     q3BoundaryRight = (900 - bullet_width)
 
-    if bullet_y < (question_Y + 90) and (q1BoundaryLeft < bullet_x < q1BouondaryRight) and isFiring:
+    if bullet_y < (question_Y + 135) and (q1BoundaryLeft < bullet_x < q1BouondaryRight) and isFiring:
          q1Anwer = True
          isFiring = False
          checkAnswer = True
+         newQuestion = True
 
-    if bullet_y < (question_Y + 90) and (q2BoundaryLeft < bullet_x < q2BouondaryRight) and isFiring:
+    if bullet_y < (question_Y + 135) and (q2BoundaryLeft < bullet_x < q2BouondaryRight) and isFiring:
          q2Answer = True
          isFiring = False
          checkAnswer = True
+         newQuestion = True
 
-    if bullet_y < (question_Y + 90) and (q3BoundaryLeft < bullet_x < q3BoundaryRight) and isFiring:
+    if bullet_y < (question_Y + 135) and (q3BoundaryLeft < bullet_x < q3BoundaryRight) and isFiring:
          q3Answer = True
          isFiring = False
          checkAnswer = True
+         newQuestion = True
 
     if (question_Y > 600) and (not ifWin):
         displayGameOver()
