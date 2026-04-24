@@ -98,17 +98,19 @@ wrongAnswers2 = [
 
 ]
 
-plane_width = 40
-plane_height = 60
+plane_width = 120
+plane_height = 180
 plane_vel = 8
 plane_x = 500
 plane_y = 800
 
 #Bullet Var
-bullet_width = 10
-bullet_height = 20
+bullet_width = 15
+bullet_height = 30
 bullet_x = plane_x + (plane_width - bullet_width)/2
 bullet_y = plane_y - 50
+bullet = pygame.image.load('bullet.png').convert_alpha()
+bullet = pygame.transform.scale(bullet, (bullet_width, bullet_height))
 
 isFiring = False
 
@@ -126,10 +128,13 @@ q2Answer = False
 q3Answer = False
 
 score = 0
+scoreMultiplyer = 2
+
 showQuestion = True
 newQuestion = True
 
 difficulty = 25
+setting = False
 
 #Lives Var
 heartImg = pygame.image.load('heart.png')
@@ -141,36 +146,172 @@ totalLives = 3
 cloudImg = pygame.image.load('cloud2.png')
 cloudImg = pygame.transform.scale(cloudImg, (question_width, question_height)).convert_alpha()
 
+#Background Image
+bgImg = pygame.image.load('background.jpg')
+bgImg = pygame.transform.scale(bgImg, (1000, 1000)).convert_alpha()
+
+bgImg2 = pygame.image.load('background2.jpg')
+bgImg2 = pygame.transform.scale(bgImg2, (1000, 1000)).convert_alpha()
+
 #Custom Screen Var
 ifStart = True
 ifCustom = True
+
+#norm Plane Images
+norm_small_curve = pygame.image.load('norm_small_curve.png').convert_alpha()
+norm_small_curve = pygame.transform.scale(norm_small_curve, (plane_width, plane_height))
+
+norm_small_small = pygame.image.load('norm_small_small.png').convert_alpha()
+norm_small_small = pygame.transform.scale(norm_small_small, (plane_width, plane_height))
+
+norm_small_triangle = pygame.image.load('norm_small_triangle.png').convert_alpha()
+norm_small_triangle = pygame.transform.scale(norm_small_triangle, (plane_width, plane_height))
+
+norm_triangle_curve = pygame.image.load('norm_triangle_curve.png').convert_alpha()
+norm_triangle_curve = pygame.transform.scale(norm_triangle_curve, (plane_width, plane_height))
+
+norm_triangle_small = pygame.image.load('norm_triangle_small.png').convert_alpha()
+norm_triangle_small = pygame.transform.scale(norm_triangle_small, (plane_width, plane_height))
+
+norm_triangle_triangle = pygame.image.load('norm_triangle_triangle.png').convert_alpha()
+norm_triangle_triangle = pygame.transform.scale(norm_triangle_triangle, (plane_width, plane_height))
+
+norm_wide_curve = pygame.image.load('norm_wide_curve.png').convert_alpha()
+norm_wide_curve = pygame.transform.scale(norm_wide_curve, (plane_width, plane_height))
+
+norm_wide_small = pygame.image.load('norm_wide_small.png').convert_alpha()
+norm_wide_small = pygame.transform.scale(norm_wide_small, (plane_width, plane_height))
+
+norm_wide_triangle = pygame.image.load('norm_wide_triangle.png').convert_alpha()
+norm_wide_triangle = pygame.transform.scale(norm_wide_triangle, (plane_width, plane_height))
+
+#Short Plane Images
+
+short_small_curve = pygame.image.load('short_small_curve.png').convert_alpha()
+short_small_curve = pygame.transform.scale(short_small_curve, (plane_width, plane_height))
+
+short_small_small = pygame.image.load('short_small_small.png').convert_alpha()
+short_small_small = pygame.transform.scale(short_small_small, (plane_width, plane_height))
+
+short_small_triangle = pygame.image.load('short_small_triangle.png').convert_alpha()
+short_small_triangle = pygame.transform.scale(short_small_triangle, (plane_width, plane_height))
+
+short_triangle_curve = pygame.image.load('short_triangle_curve.png').convert_alpha()
+short_triangle_curve = pygame.transform.scale(short_triangle_curve, (plane_width, plane_height))
+
+short_triangle_small = pygame.image.load('short_triangle_small.png').convert_alpha()
+short_triangle_small = pygame.transform.scale(short_triangle_small, (plane_width, plane_height))
+
+short_triangle_triangle = pygame.image.load('short_triangle_triangle.png').convert_alpha()
+short_triangle_triangle = pygame.transform.scale(short_triangle_triangle, (plane_width, plane_height))
+
+short_wide_curve = pygame.image.load('short_wide_curve.png').convert_alpha()
+short_wide_curve = pygame.transform.scale(short_wide_curve, (plane_width, plane_height))
+
+short_wide_small = pygame.image.load('short_wide_small.png').convert_alpha()
+short_wide_small = pygame.transform.scale(short_wide_small, (plane_width, plane_height))
+
+short_wide_triangle = pygame.image.load('short_wide_triangle.png').convert_alpha()
+short_wide_triangle = pygame.transform.scale(short_wide_triangle, (plane_width, plane_height))
+
+#Skinny Plane Images
+
+skinny_small_curve = pygame.image.load('skinny_small_curve.png').convert_alpha()
+skinny_small_curve = pygame.transform.scale(skinny_small_curve, (plane_width, plane_height))
+
+skinny_small_small = pygame.image.load('skinny_small_small.png').convert_alpha()
+skinny_small_small = pygame.transform.scale(skinny_small_small, (plane_width, plane_height))
+
+skinny_small_triangle = pygame.image.load('skinny_small_triangle.png').convert_alpha()
+skinny_small_triangle = pygame.transform.scale(skinny_small_triangle, (plane_width, plane_height))
+
+skinny_triangle_curve = pygame.image.load('skinny_triangle_curve.png').convert_alpha()
+skinny_triangle_curve = pygame.transform.scale(skinny_triangle_curve, (plane_width, plane_height))
+
+skinny_triangle_small = pygame.image.load('skinny_triangle_small.png').convert_alpha()
+skinny_triangle_small = pygame.transform.scale(skinny_triangle_small, (plane_width, plane_height))
+
+skinny_triangle_triangle = pygame.image.load('skinny_triangle_triangle.png').convert_alpha()
+skinny_triangle_triangle = pygame.transform.scale(skinny_triangle_triangle, (plane_width, plane_height))
+
+skinny_wide_curve = pygame.image.load('skinny_wide_curve.png').convert_alpha()
+skinny_wide_curve = pygame.transform.scale(skinny_wide_curve, (plane_width, plane_height))
+
+skinny_wide_small = pygame.image.load('skinny_wide_small.png').convert_alpha()
+skinny_wide_small = pygame.transform.scale(skinny_wide_small, (plane_width, plane_height))
+
+skinny_wide_triangle = pygame.image.load('skinny_wide_triangle.png').convert_alpha()
+skinny_wide_triangle = pygame.transform.scale(skinny_wide_triangle, (plane_width, plane_height))
+
+#Plane Parts
+wide_wing = pygame.image.load('wide_wing.png').convert_alpha()
+wide_wing = pygame.transform.scale(wide_wing, (300, 175))
+
+triangle_wing = pygame.image.load('triangle_wing.png').convert_alpha()
+triangle_wing = pygame.transform.scale(triangle_wing, (300, 175))
+
+small_wing = pygame.image.load('small_wing.png').convert_alpha()
+small_wing = pygame.transform.scale(small_wing, (300, 175))
+
+norm_body = pygame.image.load('norm_body.png').convert_alpha()
+norm_body = pygame.transform.scale(norm_body, (175, 300))
+norm_body = pygame.transform.rotate(norm_body, 90)
+
+short_body = pygame.image.load('short_body.png').convert_alpha()
+short_body = pygame.transform.scale(short_body, (175, 300))
+short_body = pygame.transform.rotate(short_body, 90)
+
+skinny_body = pygame.image.load('skinny_body.png').convert_alpha()
+skinny_body = pygame.transform.scale(skinny_body, (175, 300))
+skinny_body = pygame.transform.rotate(skinny_body, 90)
+
+small_tail = pygame.image.load('small_tail.png').convert_alpha()
+small_tail = pygame.transform.scale(small_tail, (300, 175))
+
+curve_tail = pygame.image.load('curve_tail.png').convert_alpha()
+curve_tail = pygame.transform.scale(curve_tail, (300, 175))
+
+triangle_tail = pygame.image.load('triangle_tail.png').convert_alpha()
+triangle_tail = pygame.transform.scale(triangle_tail, (300, 175))
+
 
 #set ifCustom Var False
 def setCustomFalse():
     global ifCustom
     ifCustom = False
 
+questionAnswered = 0
 
 #Set Difficulties
 
 def setEasy():
     global difficulty
+    global scoreMultiplyer
+    scoreMultiplyer = 1
     difficulty = 40
 
 def setMedium():
     global difficulty
+    global scoreMultiplyer
+    scoreMultiplyer = 2
     difficulty = 25
 
 def setHard():
     global difficulty
+    global scoreMultiplyer
+    scoreMultiplyer = 3
     difficulty = 15
 
-#Cycle Var
-cycle1 = 2
-color1 = (0,255,0)
+#Custom Plane Var
+body = "norm"
+wing = "wide"
+tail = "curve"
 
+
+updatedScore = False
 #Win Var
 ifWin = False
+ifLose = False
 
 def resetGame():
     global score
@@ -180,6 +321,10 @@ def resetGame():
     global ifStart
     global question_Y
     global showQuestion
+    global ifLose
+    global questionAnswered
+    questionAnswered = 0
+    ifLose = False
     showQuestion = True
     question_Y = 200
     score = 0
@@ -190,11 +335,15 @@ def resetGame():
 
 def displayGameOver():
     global ifWin
+    global isFiring
     global button
     global button2
     global button3
     global button4
     global confirmButton
+    global ifLose 
+    ifLose = True
+    isFiring = False
     window.fill((0,0,0))
     font = pygame.font.SysFont('Arial', 100)
     text = font.render('Game Over', True, (255, 0, 0))
@@ -246,23 +395,34 @@ def setSettingFalse():
     global setting
     setting = False
 
+def ifStartFalse():
+    global ifStart
+    ifStart = False
+    global startButton
+    startButton = 0
+
 def setSetting():
     global settings
     global setting
+    global startButton
+    startButton = 0
+
     setting = True
+
     while setting:
-        window.fill((255,255,255))
+        window.blit(bgImg2, (0,0))
         font = pygame.font.SysFont("Arial", 75)
         text = font.render("Choose your difficulty", True, (0,0,0))
         window.blit(text, (500-text.get_width()//2, 250))
 
-        settings = Button(window, 30, 30, 150, 150, image = settingImg, colour=(0, 0, 0, 0),hoverColour=(20, 0, 0, 0), pressedColour=(0, 0, 0, 0), onClick=lambda: setSettingFalse())
+        settings = Button(window, 30, 30, 115, 115, image = settingImg, colour=(0, 0, 0, 0),hoverColour=(0, 0, 0, 0), pressedColour=(0, 0, 0, 0), onClick=lambda: setSettingFalse())
+
 
         easy = Button(window, 100, 600, 200, 75, text='Easy', fontSize=30, margin=20, onClick=lambda: setEasy())
         medium = Button(window, 400, 600, 200, 75, text='Medium', fontSize=30, margin=20, onClick=lambda: setMedium())
         hard = Button(window, 700, 600, 200, 75, text='Hard', fontSize=30, margin=20, onClick=lambda: setHard())
+        
         pygame_widgets.update(pygame.event.get())
-
         pygame.display.update()
 
     
@@ -277,70 +437,34 @@ def displayWrong():
     pygame.time.delay(1000)
     showQuestion = True
 
+
+
+cycle1 = 2
+
 def drawFirstRect():
     global cycle1
-    global color1
-    if cycle1 == 1:
-        color1 = (0,255,0)
-    elif cycle1 == 2:
-        color1 = (255,0,0)
-    elif cycle1 == 3:
-        color1 = (0,0,255)
-    else:
-        cycle1 = 1
-        color1 = (0,255,0) 
+
     cycle1 += 1
+    if cycle1 == 4:
+        cycle1 = 1
 
 cycle2 = 2
-color2 = (0,255,0)
 
 def drawSecRect():
     global cycle2
-    global color2
-    if cycle2 == 1:
-        color2 = (0,255,0)
-    elif cycle2 == 2:
-        color2 = (255,0,0)
-    elif cycle2 == 3:
-        color2 = (0,0,255)
-    else:
-        cycle2 = 1
-        color2 = (0,255,0) 
+
     cycle2 += 1
+    if cycle2 == 4:
+        cycle2 = 1
 
 cycle3 = 2
-color3 = (0,255,0)
 
 def drawThirdRect():
     global cycle3
-    global color3
-    if cycle3 == 1:
-        color3 = (0,255,0)
-    elif cycle3 == 2:
-        color3 = (255,0,0)
-    elif cycle3 == 3:
-        color3 = (0,0,255)
-    else:
-        cycle3 = 1
-        color3 = (0,255,0) 
+
     cycle3 += 1
-
-cycle4 = 2
-color4 = (0,255,0)
-
-def drawFourthRect():
-    global cycle4
-    global color4
-    if cycle4 == 1:
-        color4 = (0,255,0)
-    elif cycle4 == 2:
-        color4 = (255,0,0)
-    elif cycle4 == 3:
-        color4 = (0,0,255)
-    else:
-        cycle4 = 1
-        color4 = (0,255,0) 
-    cycle4 += 1
+    if cycle3 == 4:
+        cycle3 = 1
 
 
 run = True
@@ -358,27 +482,24 @@ while run:
 
 #Start Screen
     while ifStart:
-        window.fill((255, 255, 255))
+        window.blit(bgImg, (0,0))
 
         font = pygame.font.SysFont('Arial', 50)
 
-        intro = font.render('Welcome to the Quiz Game!', True, (0, 0, 255))
-        window.blit(intro, (500 - intro.get_width()//2, 400))
-        start = font.render('Press Y to Start', True, (0, 0, 255))
-        window.blit(start, (500 - start.get_width()//2, 500))
-
         settingImg = pygame.image.load('settings.jpg').convert_alpha()
-        settingImg = pygame.transform.scale(settingImg, (150, 150))
+        settingImg = pygame.transform.scale(settingImg, (115, 115))
 
-        settings = Button(window, 30, 30, 150, 150, image = settingImg, colour=(0, 0, 0, 0),hoverColour=(0, 0, 0, 0), pressedColour=(0, 0, 0, 0), onClick=lambda: setSetting())
+        settings = Button(window, 30, 30, 115, 115, image = settingImg, colour=(0, 0, 0, 0),hoverColour=(0, 0, 0, 0), pressedColour=(0, 0, 0, 0), onClick=lambda: setSetting())
+
+        if setting == False:
+            startButton = Button(window, 345, 715, 300, 95, text='Play!', fontSize=60, margin=20, inactiveColour=(203, 195, 227), hoverColour=(180, 170, 200), radius=20, onClick=lambda: ifStartFalse())
+        else:
+            startButton = Button(window, 0, 0, 0, 0,)
+        area = pygame.Rect(25, 25, 125, 125)
+        pygame.draw.rect(window, (255, 255, 255), area, 3)
 
         pygame_widgets.update(pygame.event.get())
         pygame.display.update()
-                
-        #Y Trigger to start game
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_y]:
-            ifStart = False
 
         #Checking for Quit
         for event in pygame.event.get():
@@ -390,25 +511,58 @@ while run:
 
 #Custom Screen for Plane
     while ifCustom:
-        window.fill(((255, 255, 255)))
+        window.blit(bgImg2, (0,0))
         font = pygame.font.SysFont('Arial', 50)
-        pygame.draw.rect(window, (0,255,0), (75,100,450,800))
-
+        # pygame.draw.rect(window, (0,255,0), (75,100,450,800))
 
         #Drawing Buttons
         settings = 0
-        button = Button(window, 912.5,125,75,75, text='>', fontSize=30, margin=20, onClick=lambda: drawFirstRect())
-        button2 = Button(window, 912.5,350,75,75, text='>', fontSize=30, margin=20, onClick=lambda: drawSecRect())
-        button3 = Button(window, 912.5,575,75,75, text='>', fontSize=30, margin=20, onClick=lambda: drawThirdRect())
-        button4 = Button(window, 912.5,800,75,75, text='>', fontSize=30, margin=20, onClick=lambda: drawFourthRect())
-        confirmButton = Button(window, 200,905,200,75, text="Confirm Plane", fontSize=30, margin=20, onClick=lambda: setCustomFalse())
+        button = Button(window, 912.5,225,75,75, text='>', fontSize=30, margin=20, onClick=lambda: drawFirstRect())
+        button2 = Button(window, 912.5,450,75,75, text='>', fontSize=30, margin=20, onClick=lambda: drawSecRect())
+        button3 = Button(window, 912.5,675,75,75, text='>', fontSize=30, margin=20, onClick=lambda: drawThirdRect())
+        confirmButton = Button(window, 175,905,200,75, text="Confirm Plane", fontSize=30, margin=20, onClick=lambda: setCustomFalse())
 
         #Draw Custom Boxes for Diff Parts
-        pygame.draw.rect(window, (color1), (600,75,300,175))
-        pygame.draw.rect(window, (color2), (600,300,300,175))
-        pygame.draw.rect(window, (color3), (600,525,300,175))
-        pygame.draw.rect(window, (color4), (600,750,300,175))
+        if cycle1 == 1:
+            window.blit(wide_wing, (600,175))
+            wing = "wide"
+        elif cycle1 == 2:
+            window.blit(triangle_wing, (600,175))
+            wing = "triangle"
+        elif cycle1 == 3:
+            window.blit(small_wing, (600,175))
+            wing = "small"
 
+        if cycle2 == 1:
+            window.blit(norm_body, (600,400))
+            body = "norm"
+        elif cycle2 == 2:
+            window.blit(short_body, (600,400))
+            body = "short"
+        elif cycle2 == 3:
+            window.blit(skinny_body, (600,400))
+            body = "skinny"
+        
+        if cycle3 == 1:
+            window.blit(small_tail, (600,625))
+            tail = "small"
+        elif cycle3 == 2:
+            window.blit(curve_tail, (600,625))
+            tail = "curve"
+        elif cycle3 == 3:
+            window.blit(triangle_tail, (600,625))
+            tail = "triangle"
+
+        plane1 = globals()[f"{body}_{wing}_{tail}"]
+        plane1 = pygame.transform.scale(plane1, (450,800))
+        window.blit(plane1, (50, 50))
+        planeName = [f"{body}_{wing}_{tail}"]
+        print(planeName)
+        if planeName == ['skinny_triangle_triangle'] and updatedScore == False:
+            scoreMultiplyer *= 2
+            updatedScore = True
+
+        print(scoreMultiplyer)
 
         #Update Buttons and Display
         pygame_widgets.update(pygame.event.get())
@@ -430,24 +584,23 @@ while run:
             plane_x -= plane_vel
     if keys[pygame.K_RIGHT] and plane_x < 900:
             plane_x += plane_vel
-    if keys[pygame.K_SPACE] and isFiring == False:  
+    if keys[pygame.K_SPACE] and isFiring == False and ifLose == False:  
         bullet_x = plane_x + (plane_width - bullet_width)/2
         isFiring = True
     if keys[pygame.K_t]:
         showQuestion = True
-    if keys[pygame.K_p]:
-        score = 9000
+    
 
           
 #White Background
-    window.fill((255, 255, 255))
+    window.blit(bgImg2, (0,0))
 
 #Check if Game Over
     if totalLives == 0 or score == 10:
         showQuestion = False
 
 #Displaying Question
-    if showQuestion and score < 10000:
+    if showQuestion and questionAnswered <= 10 and  ifLose == False:
         font = pygame.font.SysFont('Arial', 30)
         if newQuestion:
             randomQuestion = random.randint(0, len(questionDictionary)-1)
@@ -466,23 +619,18 @@ while run:
             random.shuffle(answerChoices)
 
             newQuestion = False
+            questionAnswered += 1
 
         window.blit(questionText, (500-questionText.get_width()//2, 400))
         pygame.display.update()
-        pygame.time.delay(3000)
+        pygame.time.delay(5000)
         showQuestion = False
 
 #Drawing Plane
-    pygame.draw.rect(window, (255, 0, 0), (plane_x, plane_y, plane_width, plane_height))
+    plane1 = pygame.transform.scale(plane1, (plane_width, plane_height))
+    window.blit(plane1, (plane_x, plane_y))
 
 #Drawing the 3 Possible Questions
-    # pygame.draw.rect(window, (0,255,0), (100,question_Y,question_width,question_height))
-    # pygame.draw.rect(window, (0,255,0), (400,question_Y,question_width,question_height))
-    # pygame.draw.rect(window, (0,255,0), (700,question_Y,question_width,question_height))
-    # answer1 = font.render(str(questionDictionary[list(questionDictionary.keys())[randomQuestion]]), True, (0, 0, 0))
-    # answer2 = font.render('Wrong Answer', True, (0, 0, 0))
-    # answer3 = font.render('Wrong Answer', True, (0, 0, 0))
-    
     window.blit(cloudImg, (100, question_Y))
     window.blit(cloudImg, (400, question_Y))
     window.blit(cloudImg, (700, question_Y))
@@ -515,12 +663,12 @@ while run:
         window.blit(heartImg, (50, 50))
     else:
         displayGameOver() 
-    if score == 10000:
+    if questionAnswered >= 10:
         displayWin()
 
 #Bulllet Drawing + Firing
     if isFiring and (bullet_y > 0):   
-        pygame.draw.rect(window,(0,0,255),(bullet_x,bullet_y, bullet_width,bullet_height))
+        window.blit(bullet, (bullet_x, bullet_y))
         bullet_y -= 10
     else:
         isFiring = False
@@ -529,13 +677,13 @@ while run:
 #Check Collision
 
     q1BoundaryLeft = (100 - bullet_width)
-    q1BouondaryRight = (300 - bullet_width)
+    q1BouondaryRight = (350 - bullet_width)
 
     q2BoundaryLeft = (400 - bullet_width)
     q2BouondaryRight = (650 - bullet_width)
                         
     q3BoundaryLeft = (700 - bullet_width)
-    q3BoundaryRight = (900 - bullet_width)
+    q3BoundaryRight = (950 - bullet_width)
 
     if bullet_y < (question_Y + 135) and (q1BoundaryLeft < bullet_x < q1BouondaryRight) and isFiring:
          q1Anwer = True
@@ -556,7 +704,10 @@ while run:
          newQuestion = True
 
     if (question_Y > 600) and (not ifWin):
-        displayGameOver()
+        question_Y = 200
+        showQuestion = True
+        newQuestion = True
+        totalLives -= 1
 
 #Set Question Movement
     if q1Anwer or q2Answer or q3Answer:
@@ -568,7 +719,7 @@ while run:
     if checkAnswer:
         if q1Anwer:
             if rightAnswer == 1:
-                score += 1000
+                score += (1000 * scoreMultiplyer)
                 displayCorrect()
             else:
                 totalLives -= 1
@@ -576,14 +727,14 @@ while run:
 
         elif q2Answer:
             if rightAnswer == 2:
-                score += 1000
+                score += (1000 * scoreMultiplyer)
                 displayCorrect()
             else:
                 totalLives -= 1
                 displayWrong()
         else:
             if rightAnswer == 3:
-                score += 1000
+                score += (1000 * scoreMultiplyer)
                 displayCorrect()
             else:
                 totalLives -= 1
